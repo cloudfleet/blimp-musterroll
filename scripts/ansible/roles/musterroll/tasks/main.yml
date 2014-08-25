@@ -1,0 +1,24 @@
+---
+- name: install prerequisites
+  apt: pkg={{ item }} state=present
+  with_items:
+    - authbind
+    - git
+    - npm
+    - nodejs-legacy
+
+- name: install node
+  npm: name=nodejs global=yes
+
+- name: install bower
+  npm: name=bower global=yes
+
+- name: setup files
+  file: path=/etc/authbind/byport/389 state=touch mode=0755
+
+- name: install npm packages
+  npm: path=/opt/cloudfleet/musterroll
+
+- name: install bower packages
+  sudo: no
+  command: bower install chdir=/opt/cloudfleet/musterroll
