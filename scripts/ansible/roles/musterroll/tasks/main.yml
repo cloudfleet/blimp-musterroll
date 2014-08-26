@@ -10,16 +10,10 @@
 - name: install node
   npm: name=nodejs global=yes
 
-- name: install bower
-  npm: name=bower global=yes
-
 - name: setup files
   file: path=/etc/authbind/byport/389 state=touch mode=0755
   file: path=/etc/authbind/byport/80 state=touch mode=0755
 
 - name: install npm packages
-  npm: path=/opt/cloudfleet/musterroll
+  npm: path=/opt/cloudfleet/musterroll/app
 
-- name: install bower packages
-  sudo: no
-  command: bower install chdir=/opt/cloudfleet/musterroll
