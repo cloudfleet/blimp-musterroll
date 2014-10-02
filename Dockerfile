@@ -5,9 +5,11 @@
 FROM dockerfile/nodejs
 
 ADD . /opt/cloudfleet/musterroll
-RUN cd /opt/cloudfleet/musterroll/; scripts/install.sh
+WORKDIR /opt/cloudfleet/musterroll
+RUN scripts/install.sh
 
-CMD $HOME/cockpit/scripts/start.sh
+CMD scripts/start.sh
 
-EXPOSE 389
 EXPOSE 80
+EXPOSE 389
+
