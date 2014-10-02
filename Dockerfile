@@ -4,8 +4,9 @@
 
 FROM dockerfile/nodejs
 
-ADD . /opt/cloudfleet/musterroll
-WORKDIR /opt/cloudfleet/musterroll
+ADD . /opt/cloudfleet/app
+WORKDIR /opt/cloudfleet/app
+
 RUN scripts/install.sh
 
 CMD scripts/start.sh
