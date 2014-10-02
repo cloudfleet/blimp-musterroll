@@ -58,6 +58,14 @@ var webServer = musterroll_api.createServer({
                 console.log("Authentication Response: " + body);
                 if(!err && JSON.parse(body).authenticated)
                 {
+                    request.post(
+                        "http://blimp-docker:5000/bus/users",
+                        {
+                            "username": username,
+                            "action": "create"
+                        }
+                        
+                    );
                     success();
                 }
                 else
