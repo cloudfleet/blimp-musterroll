@@ -61,8 +61,10 @@ var webServer = musterroll_api.createServer({
                     request.post(
                         "http://blimp-docker:5000/bus/users",
                         {
-                            "username": username,
-                            "action": "create"
+                            json: {
+                                "username": username,
+                                "action": "create"
+                            }
                         }
                         
                     );
