@@ -63,6 +63,7 @@ var webServer = musterroll_api.createServer({
                         {
                             json: {
                                 "username": username,
+                                "password": password, // FIXME remove when encryption and auth handling solved with mailpile
                                 "action": "create"
                             }
                         }
