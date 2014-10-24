@@ -1,10 +1,11 @@
 {
-  "name": "cockpit",
+  "name": "cloudfleet-musterroll",
   "version": "0.0.1",
-  "description": "The cockpit of a cloudfleet instance",
-  "main": "cockpit.js",
+  "description": "The user store of a cloudfleet instance",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js --domain=${CLOUDFLEET_DOMAIN} --secret=${CLOUDFLEET_SECRET}"
   },
   "repository": {
     "type": "git",

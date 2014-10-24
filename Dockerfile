@@ -2,14 +2,17 @@
 #
 # VERSION 0.1
 
-FROM dockerfile/nodejs
+FROM node:slim
 
-ADD . /opt/cloudfleet/app
+RUN apt-get update && apt-get install -y git
+
 WORKDIR /opt/cloudfleet/app
 
-RUN scripts/install.sh
+COPY package.json /opt/cloudfleet/app/
+RUN npm install
+COPY . /opt/cloudfleet/app
 
-CMD scripts/start.sh
+CMD ["npm", "start"]
 
 EXPOSE 80
 EXPOSE 389
