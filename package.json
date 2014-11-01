@@ -23,6 +23,7 @@
     "musterroll-userstore-json": "git://github.com/cloudfleet/musterroll-userstore-json.git",
     "express": "^3.5.0",
     "request": "^2.34.0",
-    "minimist": "0.0.8"
+    "minimist": "0.0.8",
+    "ejs": ""
   }
 }

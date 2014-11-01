@@ -4,6 +4,8 @@ var musterroll_api = require('musterroll-api');
 var http = require('http');
 var request = require('request');
 var argv = require('minimist')(process.argv.slice(2));
+var ejs  = require('ejs');
+var fs = require('fs');
 
 var userStoragePath = argv["user-storage-path"] || "/opt/cloudfleet/data";
 
@@ -85,6 +87,44 @@ var webServer = musterroll_api.createServer({
 
     }
 });
+
+webServer.get('/webfinger/:type?resource=:uri', function(req, res){
+
+    var type = req.params.type;
+    var uri = req.params.uri;
+
+    console.log("TYPE: " + type);
+    console.log("URI: " + uri);
+
+    var user   = this.params.resource.replace(/^acct:/, '').split('@')[0],
+        origin = this.getOrigin();
+
+    var response = {
+        'links': [ {
+            'rel':      'remoteStorage',
+            'api':      'simple',
+            'auth':     'https://' + domain + '/musterroll/oauth/' + user,
+            'template': 'https://' + domain + '/storage/' + user + '/{category}'
+        } ]
+    };
+
+    var body = "";
+
+    if(type === 'jrd') {
+        body = JSON.stringify(response);
+        res.setHeader('Content-Type', 'application/json');
+    }
+    else
+    {
+        body = ejs.render(fs.readFileSync(__dirname + '/templates/account.xml').toString(), {locals: response});
+    }
+
+    res.setHeader('Content-Length', body.length);
+    res.end(body);
+
+});
+
+
 webServer.listen(80, function(){
     "use strict";
     console.log('API server listening on port 80');
