@@ -13,6 +13,8 @@ var userStore = user_store_json.createUserStore({config_file_location: userStora
 
 var domain = argv["domain"] || "example.com";
 
+var skip_message_bus = argv["testing"] == "true"
+
 console.log("Starting LDAP server with base domain " + domain);
 
 var ldapServer = musterroll_ldap.createServer(
@@ -61,18 +63,21 @@ var webServer = musterroll_api.createServer({
                 console.log("Authentication Response: " + body);
                 if(!err && JSON.parse(body).authenticated)
                 {
-                    request.post(
-                        "http://blimp-docker:5000/bus/users",
-                        {
-                            json: {
-                                "username": username,
-                                "domain": domain,
-                                "password": password, // FIXME remove when encryption and auth handling solved with mailpile
-                                "action": "create"
-                            }
-                        }
-                        
-                    );
+                    if(!skip_message_bus)
+                    {
+                      request.post(
+                          "http://blimp-docker:5000/bus/users",
+                          {
+                              json: {
+                                  "username": username,
+                                  "domain": domain,
+                                  "password": password, // FIXME remove when encryption and auth handling solved with mailpile
+                                  "action": "create"
+                              }
+                          }
+                          
+                      );
+                    }
                     success();
                 }
                 else
