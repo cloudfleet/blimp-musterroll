@@ -13,8 +13,13 @@ var userStore = user_store_json.createUserStore({config_file_location: userStora
 
 var domain = argv["domain"] || "example.com";
 
-var skip_message_bus = argv["testing"] == "true"
+var testing_mode = argv["testing"] == "true";
 
+var skip_message_bus = testing_mode;
+
+if(testing_mode){
+  console.log("Starting in TESTING mode");
+}
 console.log("Starting LDAP server with base domain " + domain);
 
 var ldapServer = musterroll_ldap.createServer(
