@@ -4,7 +4,7 @@
 
 FROM node:slim
 
-RUN apt-get update && apt-get install -y git
+RUN apt-get update && apt-get install -y git-core python
 
 WORKDIR /opt/cloudfleet/app
 
