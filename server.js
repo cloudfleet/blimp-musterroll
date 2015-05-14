@@ -25,7 +25,8 @@ console.log("Starting LDAP server with base domain " + domain);
 var ldapServer = musterroll_ldap.createServer(
     {
         userStore: userStore,
-        rootDN: domain.split(".").map(function(part){return "dc=" + part;}).join(", ")
+        rootDN: domain.split(".").map(function(part){return "dc=" + part;}).join(", "),
+        domain: domain
     }
 );
 
