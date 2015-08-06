@@ -2,7 +2,7 @@
 #
 # VERSION 0.1
 
-FROM node:slim
+FROM node
 
 RUN apt-get update && apt-get install -y git-core python make g++
 
