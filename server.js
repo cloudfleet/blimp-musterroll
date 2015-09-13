@@ -55,19 +55,20 @@ var webServer = musterroll_api.createServer({
             callback(user);
         };
         var failure = error_callback;
-
-        request.post(
-            argv["auth-url"] || "https://spire.cloudfleet.io/auth/",
-            {
-                form: {
-                    username: username,
-                    password: password,
-                    secret: argv["secret"]
-                }
-            },
+        var options = {
+          url: 'https://spire.cloudfleet.io/api/v1/blimp/' + domain +'/auth/',
+          cert: fs.readFileSync('/opt/cloudfleet/tls/tls_crt.pem'),
+          key: fs.readFileSync('/opt/cloudfleet/tls/tls_key.pem'),
+          headers: {
+            'X-AUTH-USERNAME': username,
+            'X-AUTH-PASSWORD': password,
+          }
+        };
+        request.get(
+            options,
             function(err, resp, body) {
                 console.log("Authentication Response: " + body);
-                if(!err && JSON.parse(body).authenticated)
+                if(!err && resp.statusCode === 200)
                 {
                     if(!skip_message_bus)
                     {
@@ -81,14 +82,13 @@ var webServer = musterroll_api.createServer({
                                   "action": "create"
                               }
                           }
-                          
+
                       );
                     }
                     success();
                 }
                 else
                 {
-
                     console.log(JSON.stringify("Authentication error: " + err));
                     failure();
                 }
@@ -140,5 +140,3 @@ webServer.listen(80, function(){
     "use strict";
     console.log('API server listening on port 80');
 });
-
-
