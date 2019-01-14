@@ -1,8 +1,4 @@
-Blimp Cockpit
-=============
+blimp-musterroll
+================
 
-The cockpit for a cloudfleet instance
-
-## TODO
-
-- Update ldapjs version
+Customized musterroll container for a blimp
